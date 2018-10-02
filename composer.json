@@ -1,10 +1,10 @@
 {
-    "name": "yourivw/leclient",
+    "name": "fsotomsk/leclient",
     "type": "library",
     "description": "PHP LetsEncrypt client library for ACME v2",
     "license": "MIT",
     "require": {
-        "php": ">=5.2"
+        "php": ">=7.2"
     },
     "autoload": {
         "psr-4": {
