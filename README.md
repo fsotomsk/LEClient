@@ -25,7 +25,7 @@ This client also depends on cURL and OpenSSL.
 
 Using composer:
 ```bash
-composer require yourivw/leclient
+composer require fsotomsk/leclient
 ```
 
 Although it is possible to add this to your own autoloader, it's not recommended as you'll have no control of the dependencies. If you haven't used composer before, I strongly recommend you check it out at [https://getcomposer.org](https://getcomposer.org).
