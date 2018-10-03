@@ -5,7 +5,7 @@ namespace LEClient;
 /**
  * LetsEncrypt Authorization class, getting LetsEncrypt authorization data associated with a LetsEncrypt Order instance.
  *
- * PHP version 5.2.0
+ * PHP version 7.2.0
  * 
  * MIT License
  * 
@@ -62,16 +62,16 @@ class LEAuthorization
 		$this->authorizationURL = $authorizationURL;
 		
 		$get = $this->connector->get($this->authorizationURL);
-		if(strpos($get['header'], "200 OK") !== false)
-		{
-			$this->identifier = $get['body']['identifier'];
+		if(strpos($get['header'], "200 OK") !== false) {
+
+		    $this->identifier = $get['body']['identifier'];
 			$this->status = $get['body']['status'];
 			$this->expires = $get['body']['expires'];
 			$this->challenges = $get['body']['challenges'];
 		}
-		else
-		{
-			if($this->log >= LECLient::LOG_STATUS) LEFunctions::log('Cannot find authorization \'' . $authorizationURL . '\'.', 'function LEAuthorization __construct');
+		else {
+			$this->log("Cannot find authorization '{$authorizationURL}'.",
+                'function LEAuthorization __construct');
 		}
 	}
 	
@@ -82,16 +82,16 @@ class LEAuthorization
 	public function updateData()
 	{
 		$get = $this->connector->get($this->authorizationURL);
-		if(strpos($get['header'], "200 OK") !== false)
-		{
+		if(strpos($get['header'], "200 OK") !== false) {
+
 			$this->identifier = $get['body']['identifier'];
 			$this->status = $get['body']['status'];
 			$this->expires = $get['body']['expires'];
 			$this->challenges = $get['body']['challenges'];
 		}
-		else
-		{
-			if($this->log >= LECLient::LOG_STATUS) LEFunctions::log('Cannot find authorization \'' . $this->authorizationURL . '\'.', 'function updateData');
+		else {
+			$this->log("Cannot find authorization '{$this->authorizationURL}'.",
+                'function updateData');
 		}
 	}
 	
@@ -105,12 +105,23 @@ class LEAuthorization
      */
 	public function getChallenge($type)
 	{
-		foreach($this->challenges as $challenge)
-		{
-			if($challenge['type'] == $type) return $challenge;
+		foreach($this->challenges as $challenge) {
+			if($challenge['type'] == $type) {
+			    return $challenge;
+            }
 		}
-		throw new \RuntimeException('No challenge found for type \'' . $type . '\' and identifier \'' . $this->identifier['value'] . '\'.');
-	}
-}
 
-?>
+		throw new \RuntimeException("No challenge found for type '{$type}' and identifier '{$this->identifier['value']}'.");
+	}
+
+    /**
+     * @param $message
+     * @param null $function
+     */
+    public function log($message, $function=null)
+    {
+        if($this->log >= LECLient::LOG_STATUS) {
+            LEFunctions::log($message, $function);
+        }
+    }
+}
