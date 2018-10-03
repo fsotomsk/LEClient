@@ -422,8 +422,8 @@ class LEOrder
                     {
                         case LEOrder::CHALLENGE_TYPE_HTTP:
                             if(false == $localCheck
-                                || LEFunctions::checkHTTPChallenge($identifier, $challenge['token'], $keyAuthorization))
-                            {
+                                || LEFunctions::checkHTTPChallenge($identifier, $challenge['token'], $keyAuthorization)) {
+
                                 $sign = $this->connector->signRequestKid(
                                     ['keyAuthorization' => $keyAuthorization],
                                     $this->connector->accountURL,
@@ -447,8 +447,7 @@ class LEOrder
                                     return true;
                                 }
                             }
-                            else
-                            {
+                            else {
                                 $this->log("HTTP challenge for '{$identifier}' tested locally, found invalid.",
                                     'function verifyPendingOrderAuthorization');
                             }

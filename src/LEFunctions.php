@@ -193,7 +193,8 @@ class LEFunctions
      */
     public static function checkHTTPChallenge($domain, $token, $keyAuthorization)
     {
-        $requestURL = $domain . '/.well-known/acme-challenge/' . $token;
+        $requestURL = "{$domain}/.well-known/acme-challenge/{$token}";
+
         $handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $requestURL);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
@@ -215,9 +216,13 @@ class LEFunctions
     {
         $DNS = '_acme-challenge.' . str_replace('*.', '', $domain);
         $records = dns_get_record($DNS, DNS_TXT);
+
         foreach ($records as $record) {
-            if ($record['host'] == $DNS && $record['type'] == 'TXT' && $record['txt'] == $DNSDigest) return true;
+            if ($record['host'] == $DNS && $record['type'] == 'TXT' && $record['txt'] == $DNSDigest) {
+                return true;
+            }
         }
+
         return false;
     }
 
@@ -227,7 +232,7 @@ class LEFunctions
      *
      * @param string $directory The directory in which to put the .htaccess file.
      */
-    public static function createhtaccess($directory)
+    public static function createHtaccess($directory)
     {
         file_put_contents($directory . '.htaccess', "order deny,allow\ndeny from all");
     }

@@ -95,15 +95,15 @@ class LEClient
 			if(!file_exists($certificateKeys)) {
 
 				mkdir($certificateKeys, 0777, true);
-				LEFunctions::createhtaccess($certificateKeys);
+				LEFunctions::createHtaccess($certificateKeys);
 			}
 
 			$this->certificateKeys = [
-				"public_key" => $certificateKeys.'/public.pem',
-				"private_key" => $certificateKeys.'/private.pem',
-				"certificate" => $certificateKeys.'/certificate.crt',
-				"fullchain_certificate" => $certificateKeys.'/fullchain.crt',
-				"order" => $certificateKeys.'/order'
+				"public_key"            => "{$certificateKeys}/public.pem",
+				"private_key"           => "{$certificateKeys}/private.pem",
+				"certificate"           => "{$certificateKeys}/certificate.crt",
+				"fullchain_certificate" => "{$certificateKeys}/fullchain.crt",
+				"order"                 => "{$certificateKeys}/order",
 			];
 		}
 		elseif (is_array($certificateKeys)) {
@@ -142,7 +142,7 @@ class LEClient
 			if(!file_exists($accountKeys)) {
 
 				mkdir($accountKeys, 0777, true);
-				LEFunctions::createhtaccess($accountKeys);
+				LEFunctions::createHtaccess($accountKeys);
 			}
 
 			$this->accountKeys = array(
